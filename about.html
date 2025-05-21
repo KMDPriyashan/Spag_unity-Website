@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - SPAG Unity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            position: relative;
+            color: black;
+            background-color: #ffffff;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.1px 50px;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); meka dammama venasa penava  */
+        }
+        
+        .logo {
+            color: #333333;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: black;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #ff0000;
+        }
+        
+        .nav-links a.active {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+        
+        .section {
+            margin-bottom: 0;
+            padding: 70px 10%;
+            opacity: 0;
+            transform: translateY(30px);
+            width: 100%;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 50px;
+        }
+        
+        .text-content {
+            flex: 1;
+        }
+        
+        .image-container {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .image-container img {
+            width: 100%;
+            border-radius: 10px;
+            
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container img:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Animation for sections */
+        .fade-in-up {
+            animation: fadeInUp 1s forwards;
+        }
+        
+        /* Black background for specific sections */
+        .dark-section {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        .dark-section h2 {
+            color: #ff0000;
+        }
+        
+        .dark-section p {
+            color: #cccccc;
+        }
+        
+        /* Light sections */
+        .light-section {
+            background-color: #ffffff;
+        }
+        
+        /* Title section */
+        .title-section {
+            text-align: center;
+            padding: 60px 1% 10px;
+            background-color: #ffffff;
+        }
+        
+        h1.page-title {
+            font-size: 6.5rem;
+            color: black;
+            letter-spacing: -3px;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #ff0000;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+            color: #ff0000;
+        }
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+                
+        /* Reverse layout for alternate sections */
+        .reverse .content-wrapper {
+            flex-direction: row-reverse;
+        }
+        .subheading{
+            text-align: right;
+            font-size: 20px;
+            margin-right: 22%;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Floating animation for title */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Slide-in animation for nav links */
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        .nav-links li:nth-child(1) .slide-in { animation-delay: 0.1s; }
+        .nav-links li:nth-child(2) .slide-in { animation-delay: 0.2s; }
+        .nav-links li:nth-child(3) .slide-in { animation-delay: 0.3s; }
+        .nav-links li:nth-child(4) .slide-in { animation-delay: 0.4s; }
+        .nav-links li:nth-child(5) .slide-in { animation-delay: 0.5s; }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Pulse animation for highlights */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                flex-direction: column-reverse !important;
+            }
+            
+            .image-container {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .section {
+                padding: 50px 5%;
+            }
+            
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links li {
+                margin-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="SPAG LOGO.png" alt="Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="home.html" class="slide-in">Home</a></li>
+            <li><a href="about.html" class="active slide-in">About</a></li>
+            <li><a href="#" class="slide-in">Services</a></li>
+            <li><a href="#" class="slide-in">Projects</a></li>
+            <li><a href="#" class="slide-in">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <!-- Title Section -->
+        <div class="title-section">
+            <h1 class="page-title floating">About SPAG Unity</h1>
+            <div class="subheading">Following Us , For Better Opportunity. And Collaboration With Us</div>
+        </div>
+        
+        <!-- Who We Are Section -->
+        <div id="who-we-are" class="section light-section">
+            <div class="content-wrapper">
+                <div class="text-content">
+                    <h2>Who We Are</h2>
+                    <p>SPAG Unity represents a collective of passionate individuals dedicated to fostering collaboration and understanding across diverse communities. Founded on the principles of inclusivity and mutual respect, we strive to create meaningful connections that transcend conventional boundaries of culture, geography, and perspective.</p>
+                    <p>Our team brings together experts from various disciplines, all united by a common goal: to build bridges where there once were divides and to amplify voices that deserve to be heard.</p>
+                </div>
+                <div class="image-container">
+                    <img src="SPAG LOGO.png" alt="Diverse group of SPAG Unity team members collaborating">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Our Mission Section -->
+        <div id="our-mission" class="section dark-section reverse">
+            <div class="content-wrapper">
+                <div class="text-content">
+                    <h2>Our Mission</h2>
+                    <p>At SPAG Unity, our mission is to <span class="highlight pulse">empower communities through collaborative initiatives</span> that promote understanding, respect, and shared growth. We believe that true progress emerges when diverse perspectives come together in a spirit of genuine cooperation. Through our programs and services, we work tirelessly to create spaces where differences are celebrated and common ground is discovered.</p>
+                    <p>We are committed to developing sustainable solutions that address complex social challenges by harnessing the collective wisdom and creativity of the communities we serve.</p>
+                </div>
+                <div class="image-container">
+                    <img src="mission.jpg" alt="SPAG Unity community project in action">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Our Vision Section -->
+        <div id="our-vision" class="section light-section">
+            <div class="content-wrapper">
+                <div class="text-content">
+                    <h2>Our Vision</h2>
+                    <p>We envision a world where boundaries no longer divide us but serve as meeting points for exchange and mutual enrichment. At SPAG Unity, we aspire to be catalysts for a global community that rises together, where every individual's unique contribution is valued and integrated into the collective tapestry of human experience. Together, we are building a future where unity does not require uniformity, but thrives on the rich diversity that makes humanity extraordinary.</p>
+                </div>
+                <div class="image-container">
+                    <img src="vision.png" alt="Visual representation of SPAG Unity's vision">
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Section -->
+        <div id="history" class="section dark-section reverse">
+            <div class="content-wrapper">
+                <div class="text-content">
+                    <h2>History and Background</h2>
+                    <p>SPAG Unity was born from a grassroots initiative in 2018, when a small group of community organizers recognized the growing divisions within their local neighborhoods. What began as informal gatherings to discuss common concerns quickly evolved into structured dialogues that attracted participants from increasingly diverse backgrounds.</p>
+                    <p>By 2020, our movement had expanded beyond its original scope, establishing partnerships with educational institutions, businesses, and other non-profit organizations. Through these collaborations, we developed our signature programs that now serve communities across the region.</p>
+                    <p>Our journey has been marked by both challenges and triumphs, each contributing to our evolving understanding of what it truly means to foster unity in a complex world. With each year, our commitment to our founding principles grows stronger, as does our impact on the communities we serve.</p>
+                </div>
+                <div class="image-container">
+                    <img src="history.png" alt="Timeline of SPAG Unity's history">
+                </div>
+            </div>
+        </div>
+        
+        <!-- What Makes Us Unique Section -->
+        <div id="unique" class="section light-section">
+            <div class="content-wrapper">
+                <div class="text-content">
+                    <h2>What Makes Us Unique</h2>
+                    <p>SPAG Unity distinguishes itself through our <span class="highlight pulse">holistic approach to community building</span>. Unlike traditional organizations that may focus solely on specific issues or demographics, we create interconnected programs that address the ecosystem of factors influencing community cohesion and individual empowerment.</p>
+                    <p>Our methodology centers on the belief that sustainable change requires both top-down and bottom-up engagement. We work simultaneously with institutional leaders and community members, creating dialogue that flows in both directions. This dual approach ensures that initiatives are both visionary and grounded in practical realities.</p>
+                    <p>Furthermore, our commitment to measuring and evaluating our impact sets us apart. We believe in transparent accountability and continuous improvement, regularly reassessing our programs to ensure they truly serve the evolving needs of our communities.</p>
+                </div>
+                <div class="image-container">
+                    <img src="meeting.jpg" alt="SPAG Unity's unique approach illustration">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Created By KMDevelope-R. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

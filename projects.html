@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - SPAG Unity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            position: relative;
+            color: black;
+            background-color: #ffffff;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.1px 50px;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+        }
+        
+        .logo {
+            color: #333333;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: black;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #ff0000;
+        }
+        
+        .nav-links a.active {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+        
+        /* Title section */
+        .title-section {
+            text-align: center;
+            padding: 60px 1% 10px;
+            background-color: #ffffff;
+        }
+        
+        h1.page-title {
+            font-size: 6.5rem;
+            color: black;
+            letter-spacing: -3px;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .subheading {
+            text-align: right;
+            font-size: 20px;
+            margin-right: 22%;
+        }
+        
+        /* Projects Section */
+        .projects-section {
+            padding: 70px 10%;
+            opacity: 0;
+            transform: translateY(30px);
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #ff0000;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        .section-title p {
+            text-align: center;
+            padding: 20px;
+            line-height: 26px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #ff0000;
+        }
+        
+        /* Card Container */
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-bg {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            transition: height 0.3s ease;
+        }
+        
+        .card:hover .card-content {
+            height: 60%;
+        }
+        
+        .card h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .card:hover p {
+            max-height: 100px;
+            opacity: 1;
+        }
+        .cardheading {
+            color: black;
+            font-size: 30px;
+        }
+        
+        /* Card Button Styles */
+        .card-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .card:hover .card-button {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-button:hover {
+            background-color: #e60000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Dark Background Section */
+        .dark-section {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        .dark-section .section-title h2 {
+            color: #ff0000;
+        }
+        
+        /* Light Section */
+        .light-section {
+            background-color: #ffffff;
+        }
+        
+        /* Footer */
+        .footer-bottom {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid #ddd;
+            color: #ff0000;
+        }
+        
+        /* Animations */
+        .fade-in-up {
+            animation: fadeInUp 1s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Floating animation for title */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Slide-in animation for nav links */
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        .nav-links li:nth-child(1) .slide-in { animation-delay: 0.1s; }
+        .nav-links li:nth-child(2) .slide-in { animation-delay: 0.2s; }
+        .nav-links li:nth-child(3) .slide-in { animation-delay: 0.3s; }
+        .nav-links li:nth-child(4) .slide-in { animation-delay: 0.4s; }
+        .nav-links li:nth-child(5) .slide-in { animation-delay: 0.5s; }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Pulse animation for highlights */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        /* Card animation delays */
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .card-container {
+                flex-direction: column;
+            }
+            
+            .card {
+                width: 100%;
+            }
+            
+            h1.page-title {
+                font-size: 4rem;
+            }
+            
+            .subheading {
+                text-align: center;
+                margin-right: 0;
+            }
+            
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links li {
+                margin-left: 15px;
+            }
+        }
+        .donation-content{
+            margin-top: 45px;
+            line-height: 27px;
+        }
+        .donation-button{
+            background-color: #ff0000;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            padding-left: 40px;
+            padding-right: 40px;
+            margin-top: 35px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .donation-button:hover {
+            background-color: #e60000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="SPAG LOGO.png" alt="Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="home.html" class="slide-in">Home</a></li>
+            <li><a href="about.html" class="slide-in">About</a></li>
+            <li><a href="projects.html" class="active slide-in">Projects</a></li>
+            <li><a href="#" class="slide-in">Services</a></li>
+            <li><a href="#" class="slide-in">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <!-- Title Section -->
+        <div class="title-section">
+            <h1 class="page-title floating">Projects of SPAG Unity</h1>
+            <div class="subheading">Transforming Communities Through Collaborative Action</div>
+        </div>
+        
+        <!-- Previous Projects Section -->
+        <div id="previous-projects" class="projects-section light-section">
+            <div class="section-title">
+                <h2 class="pulse">Our Previous Projects</h2>
+                <p>Completed projects are initiatives or tasks that have successfully reached their conclusion by fulfilling their defined objectives. These projects often involve a sequence of planned activities, milestones, and collaboration, resulting in outcomes that align with their initial goals. The completion of a project signifies the achievement of desired results, whether it's creating a product, delivering a service, or accomplishing a specific mission. Done projects are important stepping stones for growth, learning, and future planning, reflecting the effort and dedication put into turning ideas into reality.</p>
+            </div>
+            <div class="card-container">
+                <!-- Project Card 1 -->
+                <div class="card">
+                    <img src="home page background 1.jpg" alt="Community Education Initiative" class="card-bg">
+                    <div class="card-content">
+                        <h3>Community Education Initiative</h3>
+                        <p>Providing educational resources and mentorship to underserved communities, reaching over 500 children in 2024.</p>
+                        <button class="card-button">See More</button>
+                    </div>
+                    
+                </div>
+                
+                <!-- Project Card 2 -->
+                <div class="card">
+                    <img src="home page background 2.jpg" alt="Environmental Cleanup Campaign" class="card-bg">
+                    <div class="card-content">
+                        <h3>Environmental Cleanup Campaign</h3>
+                        <p>Mobilizing volunteers to remove waste from local waterways and educate the community about conservation.</p>
+                        <button class="card-button">See More</button>
+                    </div>
+                </div>
+                
+                
+                <!-- Project Card 3 -->
+                <div class="card">
+                    <img src="home page background 3.jpg" alt="Health Awareness Program" class="card-bg">
+                    <div class="card-content">
+                        <h3>Health Awareness Program</h3>
+                        <p>Providing free health screenings and education workshops in partnership with local healthcare providers.</p>
+                        <button class="card-button">See More</button>
+                    </div>
+                </div>
+            </div>
+            <div class="donation-content">We believe in the power of community and collective action to create a better future. Our projects are dedicated to improving education, supporting underprivileged communities, promoting sustainability , but achieving these goals requires your support. By contributing to our initiatives, you become part of a journey that brings hope, growth, and positive change to those who need it most. Your generosity, no matter the size, will have a direct impact and help us make our vision a reality. Together, we can build a brighter tomorrow. Thank you for considering joining us in this meaningful effort.</div>
+            <button class="donation-button">Donation</button>
+        </div>
+        <div class="donetion-content"></div>
+        
+        <!-- Upcoming Projects Section -->
+        <div id="upcoming-projects" class="projects-section dark-section">
+            <div class="section-title">
+                <h2 class="pulse">Upcoming Projects</h2>
+                <p>Completed projects are initiatives or tasks that have successfully reached their conclusion by fulfilling their defined objectives. These projects often involve a sequence of planned activities, milestones, and collaboration, resulting in outcomes that align with their initial goals. The completion of a project signifies the achievement of desired results, whether it's creating a product, delivering a service, or accomplishing a specific mission. Done projects are important stepping stones for growth, learning, and future planning, reflecting the effort and dedication put into turning ideas into reality.</p>
+            </div>
+            <div class="card-container">
+                <!-- Project Card 1 -->
+                <div class="card">
+                    <img src="home page background 4.jpg" alt="Youth Leadership Summit" class="card-bg">
+                    <div class="card-content">
+                        <h3>Youth Leadership Summit</h3>
+                        <p>A three-day conference designed to empower young leaders with the skills they need to create positive change.</p>
+                        <button class="card-button">See More</button>
+                    </div>
+                </div>
+                
+                <!-- Project Card 2 -->
+                <div class="card">
+                    <img src="home page background 3.jpg" alt="Digital Literacy Program" class="card-bg">
+                    <div class="card-content">
+                        <h3>Digital Literacy Program</h3>
+                        <p>Bringing technology education to seniors and underserved populations to bridge the digital divide.</p>
+                        <button class="card-button">See More</button>
+                    </div>
+                </div>
+                
+                <!-- Project Card 3 -->
+                <div class="card">
+                    <img src="home page background 2.jpg" alt="Community Garden Initiative" class="card-bg">
+                    <div class="card-content">
+                        <h3>Community Garden Initiative</h3>
+                        <p>Creating sustainable food sources and promoting environmental education through community-managed gardens.</p>
+                        <button class="card-button">See More</button>
+                    </div>
+                </div>
+            </div>
+            <div class="donation-content">We believe in the power of community and collective action to create a better future. Our projects are dedicated to improving education, supporting underprivileged communities, promoting sustainability , but achieving these goals requires your support. By contributing to our initiatives, you become part of a journey that brings hope, growth, and positive change to those who need it most. Your generosity, no matter the size, will have a direct impact and help us make our vision a reality. Together, we can build a brighter tomorrow. Thank you for considering joining us in this meaningful effort.</div>
+            <button class="donation-button">Donation</button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Created By KMDevelope-R. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add fade-in-up class to the section
+                    entry.target.classList.add('fade-in-up');
+                    
+                    // Find and animate title and cards within the section
+                    if (entry.target.querySelector('.section-title')) {
+                        entry.target.querySelector('.section-title').classList.add('fade-in-up');
+                    }
+                    
+                    const cards = entry.target.querySelectorAll('.card');
+                    cards.forEach(card => {
+                        card.classList.add('fade-in-up');
+                    });
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all project sections
+        document.querySelectorAll('.projects-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

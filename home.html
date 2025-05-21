@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+        
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .bg-image.active {
+            opacity: 1;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100vh;
+            text-align: right;
+            padding: 20px;
+            padding-right: 230px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+        
+        h2 {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #cccccc;
+            font-weight: 300;
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
+            line-height: 28px;
+        }
+        
+        .btn {
+            background-color: #ff0000;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.0rem;
+            font-weight: 300;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.2s;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.6s;
+        }
+        
+        .btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-3px);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background images will be added here via JavaScript -->
+    <div class="overlay"></div>
+    
+    <div class="content">
+        <h1>Welcome to Our SPAG Unity</h1>
+        <h2>Through collaboration and understanding, we create a bond that transcends boundaries. And Together , we rise as one</h2>
+        <a href="main.html"><button class="btn">Wellcome</button></a>
+    </div>
+
+    <script>
+        // Array of background images
+        const backgroundImages = [
+            'home page background 1.jpg',
+            'home page background 2.jpg',
+            'home page background 3.jpg',
+            'home page background 4.jpg'
+        ];
+        
+        let currentImageIndex = 0;
+        
+        // Function to create and manage background images
+        function setupBackgroundRotation() {
+            // Create initial background elements
+            backgroundImages.forEach((image, index) => {
+                const bgElement = document.createElement('div');
+                bgElement.className = 'bg-image';
+                bgElement.style.backgroundImage = `url('${image}')`;
+                
+                // Make the first image active
+                if (index === 0) {
+                    bgElement.classList.add('active');
+                }
+                
+                document.body.insertBefore(bgElement, document.body.firstChild);
+            });
+            
+            // Get all background elements
+            const bgElements = document.querySelectorAll('.bg-image');
+            
+            // Set interval to rotate backgrounds
+            setInterval(() => {
+                // Remove active class from current image
+                bgElements[currentImageIndex].classList.remove('active');
+                
+                // Update index to next image
+                currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+                
+                // Add active class to new current image
+                bgElements[currentImageIndex].classList.add('active');
+            }, 5000);
+        }
+        
+        // Initialize when the page loads
+        window.addEventListener('load', setupBackgroundRotation);
+    </script>
+</body>
+</html>
