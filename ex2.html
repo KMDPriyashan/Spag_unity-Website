@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - SPAG Unity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            position: relative;
+            color: black;
+            background-color: #ffffff;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.1px 50px;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+        }
+        
+        .logo {
+            color: #333333;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: black;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #ff0000;
+        }
+        
+        .nav-links a.active {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+        
+        /* Title section */
+        .title-section {
+            text-align: center;
+            padding: 60px 1% 10px;
+            background-color: #ffffff;
+            margin-bottom: 40px;
+        }
+        
+        h1.page-title {
+            font-size: 6.5rem;
+            color: black;
+            letter-spacing: -3px;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .subheading {
+            text-align: right;
+            font-size: 20px;
+            margin-right: 26%;
+            color: #ff0000;
+        }
+        
+        .intro-paragraph {
+            max-width: 1250px;
+            margin: 30px auto;
+            text-align: center;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        /* Services Gallery Section */
+        .services-gallery {
+            display: flex;
+            padding: 50px 10%;
+            background-color: #f5f5f5;
+            margin-bottom: 50px;
+        }
+        
+        .services-info {
+            flex: 1;
+            padding-right: 40px;
+        }
+        
+        .services-info h2 {
+            font-size: 2.5rem;
+            color: #ff0000;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .services-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #ff0000;
+        }
+        
+        .services-info p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .service-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .service-button:hover {
+            background-color: #e60000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .photo-gallery {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(80px, auto);
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        
+        .gallery-item:nth-child(4) {
+            grid-column: span 2;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 5px;
+        }
+        
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        
+        /* Services List Section */
+        .services-list {
+            padding: 70px 10%;
+            text-align: center;
+            background-color: #ffffff;
+            margin-bottom: 50px;
+        }
+        
+        .services-list h2 {
+            font-size: 2.5rem;
+            color: #ff0000;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .services-list h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #ff0000;
+        }
+        
+        .services-list p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .service-boxes {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .service-box {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .service-box p {
+            margin-bottom: 20px;
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #ff0000;
+            margin-bottom: 20px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 70px 10%;
+            background-color: black;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .testimonials h2 {
+            font-size: 2.5rem;
+            color: #ff0000;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .testimonials h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #ff0000;
+        }
+        
+        .testimonials p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            color: white;
+        }
+        
+        .testimonial-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(255, 0, 0, 0.1);
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 20px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            color: #777;
+            margin: 0;
+        }
+        
+        /* Footer */
+        .footer-bottom {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid #ddd;
+            color: #ff0000;
+        }
+        
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Floating animation for title */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Slide-in animation for nav links */
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        .nav-links li:nth-child(1) .slide-in { animation-delay: 0.1s; }
+        .nav-links li:nth-child(2) .slide-in { animation-delay: 0.2s; }
+        .nav-links li:nth-child(3) .slide-in { animation-delay: 0.3s; }
+        .nav-links li:nth-child(4) .slide-in { animation-delay: 0.4s; }
+        .nav-links li:nth-child(5) .slide-in { animation-delay: 0.5s; }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .services-gallery {
+                flex-direction: column;
+            }
+            
+            .services-info {
+                padding-right: 0;
+                padding-bottom: 40px;
+            }
+            
+            .service-boxes, 
+            .testimonial-cards {
+                flex-direction: column;
+            }
+            
+            h1.page-title {
+                font-size: 4rem;
+            }
+            
+            .subheading {
+                text-align: center;
+                margin-right: 0;
+            }
+            
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links li {
+                margin-left: 15px;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="SPAG LOGO.png" alt="Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="home.html" class="slide-in">Home</a></li>
+            <li><a href="about.html" class="slide-in">About</a></li>
+            <li><a href="projects.html" class="slide-in">Projects</a></li>
+            <li><a href="services.html" class="active slide-in">Services</a></li>
+            <li><a href="#" class="slide-in">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <!-- Title Section -->
+        <div class="title-section">
+            <h1 class="page-title floating">Our Services</h1>
+            <div class="subheading">Transforming Communities Through Expert Support</div>
+            <p class="intro-paragraph fade-in-up">
+                At SPAG Unity, we provide comprehensive services designed to empower communities and create lasting positive change. Our team of dedicated professionals works alongside community members to develop and implement solutions tailored to specific needs and challenges.
+            </p>
+        </div>
+        
+        <!-- Services Gallery Section -->
+        <div class="services-gallery fade-in-up">
+            <div class="services-info">
+                <h2>How We Can Help</h2>
+                <p>
+                    Our services are designed to address critical community needs while building capacity for sustainable growth and development. We combine hands-on expertise with a deep understanding of community dynamics to deliver results that make a real difference in people's lives.
+                </p>
+                <p>
+                    Whether you're seeking support for a specific initiative or looking to develop a comprehensive community program, our team is ready to collaborate with you every step of the way. We believe in working alongside communities, not just for them. <br>Certainly! Here's a similar paragraph for you:
+
+                    Our mission is to empower communities by addressing pressing challenges and fostering long-term growth. By leveraging specialized knowledge and a nuanced understanding of local dynamics, we deliver innovative solutions that create meaningful, lasting impacts. Through collaboration and dedication, we strive to build a brighter future for individuals and communities alike.
+                </p>
+                <button class="service-button">Request a Consultation</button>
+            </div>
+            <div class="photo-gallery">
+                <div class="gallery-item">
+                    <img src="home page background 1.jpg" alt="Community Workshop">
+                </div>
+                <div class="gallery-item">
+                    <img src="home page background 2.jpg" alt="Environmental Project">
+                </div>
+                <div class="gallery-item">
+                    <img src="home page background 3.jpg" alt="Health Awareness Session">
+                </div>
+                <div class="gallery-item">
+                    <img src="home page background 4.jpg" alt="Youth Leadership">
+                </div>
+                <div class="gallery-item">
+                    <img src="home page background 2.jpg" alt="Education Outreach">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lightbox for Images -->
+        <div class="lightbox">
+            <span class="close-lightbox">&times;</span>
+            <img src="" alt="Enlarged image">
+        </div>
+        
+        <!-- Services List Section -->
+        <div class="services-list fade-in-up">
+            <h2>Our Core Services</h2>
+            <p>
+                We offer a range of specialized services to support community development and address critical social needs. Our approach is collaborative, inclusive, and focused on creating sustainable solutions.
+            </p>
+            <div class="service-boxes">
+                <!-- Service 1 -->
+                <div class="service-box">
+                    <div class="service-icon">📚</div>
+                    <h3>Community Education</h3>
+                    <p>
+                        We provide comprehensive educational programs tailored to community needs, including literacy initiatives, skills development, and knowledge sharing workshops. Our approach emphasizes practical learning and building local capacity.
+                    </p>
+                    <button class="service-button">Learn More</button>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-box">
+                    <div class="service-icon">🌱</div>
+                    <h3>Environmental Programs</h3>
+                    <p>
+                        Our environmental services include conservation initiatives, cleanup campaigns, sustainable practices education, and green space development. We work with communities to create healthier, more sustainable environments.
+                    </p>
+                    <button class="service-button">Learn More</button>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-box">
+                    <div class="service-icon">💪</div>
+                    <h3>Health & Wellness Support</h3>
+                    <p>
+                        We offer health education, awareness campaigns, screening programs, and wellness initiatives designed to improve community health outcomes. Our programs emphasize prevention and accessible care for all.
+                    </p>
+                    <button class="service-button">Learn More</button>
+                </div>
+                <!-- services 4 -->
+                <div class="service-box">
+                    <div class="service-icon">🔥</div>
+                    <h3>Motivation Progarm</h3>
+                    <p>
+                        Our "Motivation Program" is designed to inspire and empower individuals to reach their full potential by unlocking the strength and resilience within them. Together, let's spark the motivation that leads to transformation!</p>
+                    <button class="service-button">Learn More</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonials Section -->
+        <div class="testimonials fade-in-up">
+            <h2>What Our Community Says</h2>
+            <p>
+                Don't just take our word for it. Hear from individuals and organizations who have partnered with us to create meaningful change in their communities.
+            </p>
+            <div class="testimonial-cards">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "SPAG Unity's community education program transformed our neighborhood. Their team worked closely with us to identify our specific needs and develop a program that truly empowered our youth. The results have been remarkable."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="home page background 1.jpg" alt="Sarah Johnson">
+                        </div>
+                        <div class="author-info">
+                            <h4>Virat Koli</h4>
+                            <p>Professional Cricketer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "The environmental cleanup initiative organized by SPAG Unity was incredibly well-executed. Not only did they help us remove waste from our local park, but they also educated residents about sustainable practices that continue to benefit our community."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="home page background 2.jpg" alt="Michael Chen">
+                        </div>
+                        <div class="author-info">
+                            <h4>Dr. Shalika pathirathna</h4>
+                            <p>Former Criminal Dean of University</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "As a healthcare provider, I've seen firsthand the impact of SPAG Unity's health awareness programs. Their holistic approach addresses both immediate health concerns and long-term wellness, making a real difference in our community's health outcomes."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="home page background 3.jpg" alt="Dr. Amara Patel">
+                        </div>
+                        <div class="author-info">
+                            <h4>Kane Williamson</h4>
+                            <p>Populer Professional Cricketer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Created By KMDevelope-R. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all fade-in sections
+        document.querySelectorAll('.services-gallery, .services-list, .testimonials').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Gallery lightbox functionality
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = document.querySelector('.lightbox img');
+        const closeLightbox = document.querySelector('.close-lightbox');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').getAttribute('src');
+                const imgAlt = item.querySelector('img').getAttribute('alt');
+                lightboxImg.setAttribute('src', imgSrc);
+                lightboxImg.setAttribute('alt', imgAlt);
+                lightbox.style.display = 'flex';
+            });
+        });
+        
+        closeLightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+        
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
